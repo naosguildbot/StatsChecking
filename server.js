@@ -9,6 +9,7 @@ import {
   ApiError,
 } from "./lib/hypixel.js";
 import { summarizeProfiles } from "./lib/skyblock.js";
+import { summarizeGames } from "./lib/minigames.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -74,7 +75,6 @@ app.get("/api/stats", async (req, res) => {
 
     const { uuid, name: canonicalName } = await resolveUuid(name);
 
-    // One lookup, on demand — no polling, no background tracking.
     const [playerRes, sbRes] = await Promise.all([
       getPlayer(uuid),
       getSkyblockProfiles(uuid),
@@ -85,6 +85,7 @@ app.get("/api/stats", async (req, res) => {
       name: canonicalName,
       cached: playerRes.cached && sbRes.cached,
       profile: summarizePlayer(playerRes.data.player, canonicalName),
+      games: summarizeGames(playerRes.data.player),
       skyblock: summarizeProfiles(sbRes.data, uuid),
     });
   } catch (err) {

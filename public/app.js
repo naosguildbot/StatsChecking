@@ -52,6 +52,20 @@ function renderProfile(name, uuid, profile) {
   return `<div class="card">${head}<div class="grid" style="margin-top:16px">${grid}</div></div>`;
 }
 
+function renderGames(games) {
+  if (!games || games.length === 0) {
+    return `<div class="card"><h2>Minigames</h2><p class="note">No minigame stats found (the player may have their API off, or hasn't played these).</p></div>`;
+  }
+  return games
+    .map((g) => {
+      const tiles = g.stats
+        .map((t) => stat(t.label, typeof t.value === "number" ? fmt(t.value) : t.value))
+        .join("");
+      return `<div class="card"><h2>${g.name}</h2><div class="grid">${tiles}</div></div>`;
+    })
+    .join("");
+}
+
 function renderSkyblock(sb) {
   if (!sb.hasData) {
     return `<div class="card"><h2>SkyBlock</h2><p class="note">${sb.reason}</p></div>`;
@@ -102,7 +116,9 @@ async function lookup(name) {
     if (!res.ok) throw new Error(data.error || "Lookup failed.");
 
     results.innerHTML =
-      renderProfile(data.name, data.uuid, data.profile) + renderSkyblock(data.skyblock);
+      renderProfile(data.name, data.uuid, data.profile) +
+      renderGames(data.games) +
+      renderSkyblock(data.skyblock);
     results.hidden = false;
     setStatus(data.cached ? "Showing cached result (refreshes automatically)." : "");
   } catch (err) {
