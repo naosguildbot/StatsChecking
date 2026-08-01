@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hypixel Personal Stats</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header>
+        <h1>Hypixel Personal Stats</h1>
+        <p class="tagline">Look up any player's general profile &amp; SkyBlock summary.</p>
+      </header>
+
+      <form id="search" autocomplete="off">
+        <input
+          id="username"
+          name="username"
+          placeholder="Minecraft username…"
+          maxlength="16"
+          spellcheck="false"
+          aria-label="Minecraft username"
+        />
+        <button type="submit" id="go">Look up</button>
+      </form>
+
+      <p id="status" class="status" role="status"></p>
+
+      <section id="results" hidden></section>
+
+      <footer>
+        <p>
+          Personal-use tool. <strong>Not affiliated with, endorsed by, or connected
+          to Hypixel Inc. or Mojang/Microsoft.</strong>
+          Data is fetched on demand from the official Hypixel API and cached briefly
+          to respect their rate limits.
+        </p>
+      </footer>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
