@@ -24,6 +24,17 @@ profile and a summary of their SkyBlock stats.
 Your key lives only in `.env` (git-ignored) and is used server-side — it never
 reaches the browser.
 
+### Changing the key later
+
+When you regenerate/renew your key, swap it in with:
+
+```bash
+./set-key.sh <new-api-key>
+```
+
+Then restart the app (`pkill -f 'node server.js'; npm start`). Or just edit the
+`HYPIXEL_API_KEY` line in `.env` by hand.
+
 ---
 
 ## What it shows
